@@ -1,6 +1,6 @@
 dashboard "hackernews_dashboard" {
 
-  title         = "Hacker News Dashboard"
+  title         = "Hacker News Dashboard (Newest 500 Stories)"
   documentation = file("./dashboards/hackernews/docs/hackernews_dashboard.md")
 
   tags = merge(local.hackernews_common_tags, {
@@ -9,12 +9,8 @@ dashboard "hackernews_dashboard" {
 
 
   container {
-    # Analysis
-    card {
-      query = query.hackernews_stories_count
-      width = 2
-    }
 
+    # Analysis
     card {
       query = query.hackernews_ask_count
       width = 2
@@ -26,7 +22,6 @@ dashboard "hackernews_dashboard" {
     }
 
     # Assessments
-
     card {
       width = 2
       query = query.hackernews_max_score
@@ -54,8 +49,8 @@ dashboard "hackernews_dashboard" {
     title = "Analysis"
 
     chart {
-      title = "Users Posts (> 50)"
-      query = query.hackernews_user_with_greater_than_50_post
+      title = "Users Posts (> 5)"
+      query = query.hackernews_user_with_greater_than_5_post
       type  = "column"
       width = 6
     }
@@ -242,15 +237,6 @@ dashboard "hackernews_dashboard" {
 
 # Card Queries
 
-query "hackernews_stories_count" {
-  sql = <<-EOQ
-    select
-      count(*) as "Stories"
-    from
-      hackernews_new
-  EOQ
-}
-
 query "hackernews_ask_count" {
   sql = <<-EOQ
     select
@@ -301,7 +287,7 @@ query "hackernews_avg_show_score" {
 
 # Analysis Queries
 
-query "hackernews_user_with_greater_than_50_post" {
+query "hackernews_user_with_greater_than_5_post" {
   sql = <<-EOQ
     with data as (
       select
@@ -319,7 +305,7 @@ query "hackernews_user_with_greater_than_50_post" {
     from
       data
     where
-      posts > 50
+      posts > 5
     limit
       25
   EOQ
@@ -438,4 +424,3 @@ query "mentions" {
   param "min_minutes_ago" {}
   param "max_minutes_ago" {}
 }
-

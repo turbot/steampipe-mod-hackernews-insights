@@ -12,28 +12,22 @@ dashboard "hackernews_people_report" {
 
     chart {
       width = 6
-      title = "Top 10 Active Hacker News User (Last 7 Days)"
-      query = query.hackernews_ten_most_active_users
+      title = "Top 10 Active People By Comment (Last 7 Days)"
+      query = query.hackernews_ten_most_active_users_by_comment
+    }
+
+    chart {
+      width = 6
+      title = "Top 10 Active People By Story (Last 7 Days)"
+      query = query.hackernews_ten_most_active_users_by_story
     }
 
   }
 
   container {
 
-    title = "Hacker News People Detail"
-     input "hn_user" {
-      type = "select"
-      sql   = query.hackernews_hn_user_input.sql
-      width = 6
-      }
-
-
     table {
-      args = [
-        self.input.hn_user.value
-      ]
-
-      query  = query.hackernews_people_detail
+      query = query.hackernews_people_list
       column "Id" {
         href = "https://news.ycombinator.com/user?id={{.'Id'}}"
       }
@@ -43,35 +37,34 @@ dashboard "hackernews_people_report" {
 
 }
 
-query "hackernews_hn_user_input" {
+query "hackernews_people_list" {
   sql = <<-EOQ
-    select distinct
-      h.by as label,
-      h.by as value
-    from
-      hackernews_item as h
-    order by
-      by
-  EOQ
-}
-
-query "hackernews_people_detail" {
-  sql = <<-EOQ
+    with test as (
+      select distinct
+        h.by as label
+      from
+        hackernews_item as h
+      order by
+        by
+    )
     select
-      id as "Id",
-      created as "Created",
-      karma as "Karma",
-      JSONB_ARRAY_LENGTH(submitted) as "Submitted Items",
-      about as "About"
+      u.id as "Id",
+      to_timestamp(u.created::int) as "Created",
+      u.karma as "Karma",
+      jsonb_array_length(u.submitted) as "Submitted Items"
     from
-      hackernews_user
+      test as t left join
+      hackernews_user as u on u.id = t.label
     where
-      id = $1;
+      u.id is not null
+    order by
+      u.id
+    limit 50;
   EOQ
-  param "hn_user" {}
+
 }
 
-query "hackernews_ten_most_active_users" {
+query "hackernews_ten_most_active_users_by_comment" {
   sql = <<-EOQ
     with comment_num as (
       select
@@ -85,8 +78,21 @@ query "hackernews_ten_most_active_users" {
         and not deleted
       group by
         BY
-    ),
-    story_count as (
+    )
+    select
+      by,
+      (a.comment_count) as "Comment Count"
+    from
+      comment_num a
+    order by
+      a.comment_count desc
+    limit 15
+  EOQ
+}
+
+query "hackernews_ten_most_active_users_by_story" {
+  sql = <<-EOQ
+    with story_count as (
       select
         by,
         count(*) as story_count
@@ -101,16 +107,10 @@ query "hackernews_ten_most_active_users" {
     )
     select
       by,
-      (a.comment_count) as "Comment Count",
-      (s.story_count) as "Story  Count"
+      (s.story_count) as "Story Count"
     from
-      comment_num a
-    left join
       story_count s
-    using
-      (by)
     order by
-      a.comment_count desc,
       s.story_count desc
     limit 15
   EOQ

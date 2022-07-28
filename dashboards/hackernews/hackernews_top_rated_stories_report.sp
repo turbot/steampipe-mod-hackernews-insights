@@ -1,6 +1,6 @@
 dashboard "hackernews_top_rated_stories_report" {
 
-  title         = "Hacker News Top Rated Stories Report"
+  title         = "Hacker News Top Rated Stories (Newest 500 Stories) Report"
   documentation = file("./dashboards/hackernews/docs/hackernews_top_rated_stories_report.md")
 
   tags = merge(local.hackernews_common_tags, {
@@ -28,11 +28,11 @@ query "hackernews_top_stories_report_table" {
     select
       id as "ID",
       by as "By",
-      to_char(time::timestamptz, 'MM-DD hHH24') as time,
-      now()::date - time::date  as "Age in Days",
+      to_char(time::timestamptz, 'MM-DD hHH24') as "Time",
+      now()::date - time::date as "Age in Days",
       title as "Title",
       score::int as "Score",
-      descendants::int as comments,
+      descendants::int as "Comments",
       dead as "Dead",
       deleted as "Deleted",
       url as "URL"
@@ -44,8 +44,6 @@ query "hackernews_top_stories_report_table" {
     order by
       score desc,
       descendants desc;
-
   EOQ
-
 }
 

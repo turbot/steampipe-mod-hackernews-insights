@@ -8,57 +8,25 @@ dashboard "hackernews_sources_report" {
   })
 
   container {
-    width = 6
-
-    chart  {
-      title = "Top 10 Domains by Count"
-      width = 6
-      type = "donut"
-      query = query.hackernews_top_10_domains_by_count
-    }
-
-    chart  {
-      title = "Top 10 Domains by Max Score"
-      type = "donut"
-      width = 6
-      query = query.hackernews_top_10_domains_by_max_score
-    }
+    width = 12
 
     container {
-      table {
-        width = 12
-        query = query.hackernews_domains
-        column "Domain" {
-          wrap = "all"
-          href = "http://localhost:9194/hackernews_insights.dashboard.hackernews_sources_report?input.domain={{.'Domain'}}"
-        }
-      }
-    }
-
-  }
-
-
-  container {
-    width = 6
-
-    container  {
 
       input "domain" {
         width = 6
-        query =  query.hackernews_domain_input
+        query = query.hackernews_domain_input
       }
 
-      chart {
-        title = "Timeline of Hacker News Per Domain"
-        query = query.hackernews_domain_detail
-        args = [
-          self.input.domain
-        ]
-      }
+      # chart {
+      #   title = "Timeline of Hacker News Per Domain"
+      #   query = query.hackernews_domain_detail
+      #   args = [
+      #     self.input.domain
+      #   ]
+      # }
 
       table {
-        title = "Domain Detail"
-        args = [ self.input.domain  ]
+        args = [ self.input.domain ]
         query = query.hackernews_source_detail
         column "Id" {
           href = "https://news.ycombinator.com/item?id={{.'Id'}}"
@@ -73,6 +41,36 @@ dashboard "hackernews_sources_report" {
 
     }
 
+  }
+
+  container {
+    width = 12
+
+    chart {
+      title = "Top 10 Domains by Count"
+      width = 6
+      type = "donut"
+      query = query.hackernews_top_10_domains_by_count
+    }
+
+    chart {
+      title = "Top 10 Domains by Max Score"
+      type = "donut"
+      width = 6
+      query = query.hackernews_top_10_domains_by_max_score
+    }
+
+  }
+
+  container {
+    table {
+      width = 12
+      query = query.hackernews_domains
+      column "Domain" {
+        wrap = "all"
+        href = "http://localhost:9194/hackernews_insights.dashboard.hackernews_sources_report?input.domain={{.'Domain'}}"
+      }
+    }
   }
 
 }
@@ -180,7 +178,6 @@ query "hackernews_source_detail" {
       to_char(h.time::timestamptz, 'MM-DD hHH24') as "Time",
       h.score as "Score",
       h.url as "URL",
-      ( select count(*) from hackernews_new where url = h.url ) as "URL Occurrences",
       h.title as "Title"
     from
       hackernews_new h
@@ -228,4 +225,3 @@ query "hackernews_top_10_domains_by_max_score" {
       10
   EOQ
 }
-
