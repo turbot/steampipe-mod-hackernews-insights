@@ -1,12 +1,19 @@
 dashboard "hackernews_dashboard" {
 
-  title         = "Hacker News Dashboard (Newest 500 Stories)"
+  title         = "Hacker News Dashboard"
   documentation = file("./dashboards/hackernews/docs/hackernews_dashboard.md")
 
   tags = merge(local.hackernews_common_tags, {
     type = "Dashboard"
   })
 
+  input "story_type" {
+    title = "Stories:"
+    option "New" {}
+    option "Top" {}
+    option "Best" {}
+    width = 4
+  }
 
   container {
 
@@ -25,11 +32,17 @@ dashboard "hackernews_dashboard" {
     card {
       width = 2
       query = query.hackernews_max_score
+      args = [
+        self.input.story_type
+      ]
     }
 
     card {
       width = 2
       query = query.hackernews_avg_score
+      args = [
+        self.input.story_type
+      ]
     }
 
     card {
@@ -52,6 +65,9 @@ dashboard "hackernews_dashboard" {
       title = "Users Posts (> 5)"
       query = query.hackernews_user_with_greater_than_5_post
       type  = "column"
+      args  = [
+        self.input.story_type
+      ]
       width = 6
     }
 
@@ -59,6 +75,9 @@ dashboard "hackernews_dashboard" {
       title = "Users Score (> 50)"
       query = query.hackernews_user_with_greater_than_50_score
       type  = "column"
+      args  = [
+        self.input.story_type
+      ]
       width = 6
     }
   }
@@ -67,14 +86,17 @@ dashboard "hackernews_dashboard" {
 
     chart {
       width = 6
-      title = "Stories by Hour (Last 14 Days)"
-      query = query.hackernews_stories_by_hour_last_14_days
+      title = "Stories by Hour"
+      query = query.hackernews_stories_by_hour
+      args  = [
+        self.input.story_type
+      ]
     }
 
     chart {
       width = 6
-      title = "Ask and Show by Hour (Last 14 Days)"
-      query = query.hackernews_ask_and_show_by_hou_last_14_days
+      title = "Asks and Shows by Hour"
+      query = query.hackernews_ask_and_show_by_hour
     }
 
   }
@@ -87,7 +109,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Company Mentions: Last 4 Hours"
       query = query.mentions
-      args = [ local.companies, 240, 0 ]
+      args = [ self.input.story_type, local.companies, 240, 0 ]
     }
 
     chart {
@@ -96,16 +118,16 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Company Mentions: Last 24 Hours"
       query = query.mentions
-      args = [ local.companies, 1440, 0 ]
+      args = [ self.input.story_type, local.companies, 1440, 0 ]
     }
 
     chart {
       base = chart.companies_base
       width = 4
       type = "donut"
-      title = "Company Mentions: Last 14 Days"
+      title = "Company Mentions: Last 2 Days"
       query = query.mentions
-      args = [ local.companies, 20160, 0 ]
+      args = [ self.input.story_type, local.companies, 2880, 0 ]
     }
   }
 
@@ -117,7 +139,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Language Mentions: Last 4 Hours"
       query = query.mentions
-      args = [ local.languages, 240, 0 ]
+      args = [ self.input.story_type, local.languages, 240, 0 ]
     }
 
     chart {
@@ -126,16 +148,16 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Language Mentions: Last 24 Hours"
       query = query.mentions
-      args = [ local.languages, 1440, 0 ]
+      args = [ self.input.story_type, local.languages, 1440, 0 ]
     }
 
     chart {
       base = chart.languages_base
       width = 4
       type = "donut"
-      title = "Language Mentions: Last 14 Days"
+      title = "Language Mentions: Last 2 Days"
       query = query.mentions
-      args = [ local.languages, 20160, 0 ]
+      args = [ self.input.story_type, local.languages, 2880, 0 ]
     }
 
   }
@@ -148,7 +170,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "OS Mentions: Last 4 Hours"
       query = query.mentions
-      args = [ local.operating_systems, 240, 0 ]
+      args = [ self.input.story_type, local.operating_systems, 240, 0 ]
     }
 
     chart {
@@ -157,16 +179,16 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "OS Mentions: Last 24 Hours"
       query = query.mentions
-      args = [ local.operating_systems, 1440, 0 ]
+      args = [ self.input.story_type, local.operating_systems, 1440, 0 ]
     }
 
     chart {
       base = chart.os_base
       width = 4
       type = "donut"
-      title = "OS Mentions: Last 14 Days"
+      title = "OS Mentions: Last 2 Days"
       query = query.mentions
-      args = [ local.operating_systems, 20160, 0 ]
+      args = [ self.input.story_type, local.operating_systems, 2880, 0 ]
     }
 
   }
@@ -179,7 +201,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Cloud Mentions: Last 4 Hours"
       query = query.mentions
-      args = [ local.clouds, 240, 0 ]
+      args = [ self.input.story_type, local.clouds, 240, 0 ]
     }
 
     chart {
@@ -188,16 +210,16 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Cloud Mentions: Last 24 Hours"
       query = query.mentions
-      args = [ local.clouds, 1440, 0 ]
+      args = [ self.input.story_type, local.clouds, 1440, 0 ]
     }
 
     chart {
       base = chart.cloud_base
       width = 4
       type = "donut"
-      title = "Cloud Mentions: Last 14 Days"
+      title = "Cloud Mentions: Last 2 Days"
       query = query.mentions
-      args = [ local.clouds, 20160, 0 ]
+      args = [ self.input.story_type, local.clouds, 2880, 0 ]
     }
 
   }
@@ -210,7 +232,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "DB Mentions: Last 4 Hours"
       query = query.mentions
-      args = [ local.dbs, 240, 0 ]
+      args = [ self.input.story_type, local.dbs, 240, 0 ]
     }
 
     chart {
@@ -219,16 +241,16 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "DB Mentions: Last 24 Hours"
       query = query.mentions
-      args = [ local.dbs, 1440, 0 ]
+      args = [ self.input.story_type, local.dbs, 1440, 0 ]
     }
 
     chart {
       base = chart.db_base
       width = 4
       type = "donut"
-      title = "DB mentions: Last 14 Days"
+      title = "DB mentions: Last 2 Days"
       query = query.mentions
-      args = [ local.dbs, 20160, 0 ]
+      args = [ self.input.story_type, local.dbs, 2880, 0 ]
     }
 
   }
@@ -255,22 +277,38 @@ query "hackernews_show_count" {
 
 query "hackernews_max_score" {
   sql = <<-EOQ
-    select max(score::int) as "Max Score" from hackernews_new
+  with stories as (
+    select * from hackernews_new where $1 = 'New'
+    union
+    select * from hackernews_top where $1 = 'Top'
+    union
+    select * from hackernews_best where $1 = 'Best'
+    )
+    select max(score) as "Max Score" from stories
   EOQ
+  param "story_type" {}
 }
 
 query "hackernews_avg_score" {
   sql = <<-EOQ
+    with stories as (
+      select * from hackernews_new where $1 = 'New'
+      union
+      select * from hackernews_top where $1 = 'Top'
+      union
+      select * from hackernews_best where $1 = 'Best'
+    )
     select
-      round(avg(score::int), 1) as "Avg Score"
+      round(avg(score), 1) as "Avg Score"
     from hackernews_new
   EOQ
+  param "story_type" {}
 }
 
 query "hackernews_avg_ask_score" {
   sql = <<-EOQ
     select
-      round(avg(score::int), 1) as "Avg Ask Score"
+      round(avg(score), 1) as "Avg Ask Score"
     from
       hackernews_ask_hn
   EOQ
@@ -279,7 +317,7 @@ query "hackernews_avg_ask_score" {
 query "hackernews_avg_show_score" {
   sql = <<-EOQ
     select
-      round(avg(score::int), 1) as "Avg Show Score"
+      round(avg(score), 1) as "Avg Show Score"
     from
       hackernews_show_hn
   EOQ
@@ -290,15 +328,35 @@ query "hackernews_avg_show_score" {
 query "hackernews_user_with_greater_than_5_post" {
   sql = <<-EOQ
     with data as (
-      select
-        by,
-        count(*) as posts
+      (select
+      by,
+      count(*) as posts
       from
-        hackernews_new
+        hackernews_new where $1 = 'New'
       group by
         by
       order by
-        posts desc
+        posts desc)
+      union
+      (select
+        by,
+      count(*) as posts
+      from
+        hackernews_top where $1 = 'Top'
+      group by
+        by
+      order by
+        posts desc)
+      union
+      (select
+        by,
+      count(*) as posts
+      from
+        hackernews_best where $1 = 'Best'
+      group by
+        by
+      order by
+        posts desc)
     )
     select
       *
@@ -309,17 +367,25 @@ query "hackernews_user_with_greater_than_5_post" {
     limit
       25
   EOQ
+  param "story_type" {}
 }
 
 query "hackernews_user_with_greater_than_50_score" {
   sql = <<-EOQ
+    with stories as (
+      select * from hackernews_new where $1 = 'New'
+      union
+      select * from hackernews_top where $1 = 'Top'
+      union
+      select * from hackernews_best where $1 = 'Best'
+    )
     select
       by,
-      max(score::int) as max_score
+      max(score) as max_score
     from
-      hackernews_new
+      stories
     where
-      score::int > 50
+      score > 50
     group by
       by
     order by
@@ -327,17 +393,17 @@ query "hackernews_user_with_greater_than_50_score" {
     limit
       25
   EOQ
+  param "story_type" {}
 }
 
-query "hackernews_stories_by_hour_last_14_days" {
+query "hackernews_stories_by_hour" {
   sql = <<-EOQ
     with data as (
-      select
-        time::timestamptz
-      from
-        hackernews_new
-      where
-        time::timestamptz > now() - interval '14 day'
+      (select * from hackernews_new where $1 = 'New')
+      union
+      (select * from hackernews_top where $1 = 'Top')
+      union
+      (select * from hackernews_best where $1 = 'Best')
     )
     select
       to_char(time,'MM:DD HH24') as hour,
@@ -347,11 +413,12 @@ query "hackernews_stories_by_hour_last_14_days" {
     group by
       hour
     order by
-      hour
+      hour;
   EOQ
+  param "story_type" {}
 }
 
-query "hackernews_ask_and_show_by_hou_last_14_days" {
+query "hackernews_ask_and_show_by_hour" {
   sql = <<-EOQ
     with ask_hn as (
       select
@@ -388,12 +455,18 @@ query "hackernews_ask_and_show_by_hou_last_14_days" {
   EOQ
 }
 
-
 query "mentions" {
   sql = <<-EOQ
-    with names as (
+    with data as (
+      (select * from hackernews_new where $1 = 'New')
+      union
+      (select * from hackernews_top where $1 = 'Top')
+      union
+      (select * from hackernews_best where $1 = 'Best')
+    ),
+     names as (
       select
-        unnest( $1::text[] ) as name
+        unnest( $2::text[] ) as name
     ),
     counts as (
       select
@@ -402,10 +475,10 @@ query "mentions" {
           select
             count(*)
           from
-            hackernews_new
+            data
           where
             title ~* name
-            and (extract(epoch from now() - time::timestamptz) / 60)::int between symmetric $2 and $3
+            and (extract(epoch from now() - time::timestamptz) / 60)::int between symmetric $3 and $4
         ) as mentions
         from
           names
@@ -420,6 +493,7 @@ query "mentions" {
     order by
       mentions desc
   EOQ
+  param "story_type" {}
   param "names" {}
   param "min_minutes_ago" {}
   param "max_minutes_ago" {}

@@ -1,7 +1,7 @@
-dashboard "hackernews_sources_report" {
+dashboard "hackernews_sources" {
 
-  title         = "Hacker News Sources Report"
-  documentation = file("./dashboards/hackernews/docs/hackernews_sources_report.md")
+  title         = "Hacker News Sources"
+  documentation = file("./dashboards/hackernews/docs/hackernews_sources.md")
 
   tags = merge(local.hackernews_common_tags, {
     type = "Report"
@@ -12,21 +12,25 @@ dashboard "hackernews_sources_report" {
 
     container {
 
-      input "domain" {
-        width = 6
-        query = query.hackernews_domain_input
+      input "story_type" {
+        title    = "Stories:"
+        option "New" {}
+        option "Top" {}
+        option "Best" {}
+        width       = 4
       }
 
-      # chart {
-      #   title = "Timeline of Hacker News Per Domain"
-      #   query = query.hackernews_domain_detail
-      #   args = [
-      #     self.input.domain
-      #   ]
-      # }
+      input "domain" {
+        title    = "Select a Domain:"
+        width = 6
+        query = query.hackernews_domain_input
+        args  = {
+          story_type = self.input.story_type.value
+        }
+      }
 
       table {
-        args = [ self.input.domain ]
+        args = [ self.input.story_type.value, self.input.domain ]
         query = query.hackernews_source_detail
         column "Id" {
           href = "https://news.ycombinator.com/item?id={{.'Id'}}"
@@ -50,6 +54,7 @@ dashboard "hackernews_sources_report" {
       title = "Top 10 Domains by Count"
       width = 6
       type = "donut"
+       args = [ self.input.story_type ]
       query = query.hackernews_top_10_domains_by_count
     }
 
@@ -57,6 +62,7 @@ dashboard "hackernews_sources_report" {
       title = "Top 10 Domains by Max Score"
       type = "donut"
       width = 6
+      args = [ self.input.story_type ]
       query = query.hackernews_top_10_domains_by_max_score
     }
 
@@ -66,6 +72,7 @@ dashboard "hackernews_sources_report" {
     table {
       width = 12
       query = query.hackernews_domains
+      args = [ self.input.story_type ]
       column "Domain" {
         wrap = "all"
         href = "http://localhost:9194/hackernews_insights.dashboard.hackernews_sources_report?input.domain={{.'Domain'}}"
@@ -81,7 +88,17 @@ query "hackernews_domain_input" {
       select distinct
         substring(url from 'http[s]*://([^/$]+)') as domain
       from
-        hackernews_new
+        hackernews_new where $1 = 'New'
+      union
+      select distinct
+        substring(url from 'http[s]*://([^/$]+)') as domain
+      from
+        hackernews_top where $1 = 'Top'
+      union
+      select distinct
+        substring(url from 'http[s]*://([^/$]+)') as domain
+      from
+        hackernews_best where $1 = 'Best'
     )
     select
       domain as label,
@@ -91,6 +108,7 @@ query "hackernews_domain_input" {
     order by
       domain
   EOQ
+  param "story_type" {}
 }
 
 query "hackernews_domains" {
@@ -99,10 +117,20 @@ query "hackernews_domains" {
       select
         url,
         substring(url from 'http[s]*://([^/$]+)') as domain
-    from
-      hackernews_new
-    where
-      url != '<null>'
+      from
+        hackernews_new where $1 = 'New' and url != '<null>'
+      union
+      select
+        url,
+        substring(url from 'http[s]*://([^/$]+)') as domain
+      from
+        hackernews_top where $1 = 'Top' and url != '<null>'
+      union
+      select
+        url,
+        substring(url from 'http[s]*://([^/$]+)') as domain
+      from
+        hackernews_best where $1 = 'Best' and url != '<null>'
     ),
     avg_and_max as (
       select
@@ -145,34 +173,18 @@ query "hackernews_domains" {
     order by
       count desc
   EOQ
-}
-
-query "hackernews_domain_detail" {
-  sql = <<-EOQ
-    with items_by_day as (
-      select
-        to_char(time::timestamptz, 'MM-DD') as day,
-        substring(url from 'http[s]*://([^/$]+)') as domain
-    from
-      hackernews_new
-    where
-      substring(url from 'http[s]*://([^/$]+)') = $1
-    )
-    select
-      day,
-      count(*)
-    from
-      items_by_day
-    group by
-      day
-    order by
-      day
-  EOQ
-  param "domain" {}
+  param "story_type" {}
 }
 
 query "hackernews_source_detail" {
   sql = <<-EOQ
+    with stories as (
+      select * from hackernews_new where $1 = 'New'
+      union
+      select * from hackernews_top where $1 = 'Top'
+      union
+      select * from hackernews_best where $1 = 'Best'
+    )
     select
       h.id as "Id",
       to_char(h.time::timestamptz, 'MM-DD hHH24') as "Time",
@@ -180,18 +192,26 @@ query "hackernews_source_detail" {
       h.url as "URL",
       h.title as "Title"
     from
-      hackernews_new h
+      stories h
     where
-      h.url ~ $1
+      h.url ~ $2
     order by
       h.score::int desc
   EOQ
 
+  param "story_type" {}
   param "domain" {}
 }
 
 query "hackernews_top_10_domains_by_count" {
   sql = <<-EOQ
+    with stories as (
+      select * from hackernews_new where $1 = 'New'
+      union
+      select * from hackernews_top where $1 = 'Top'
+      union
+      select * from hackernews_best where $1 = 'Best'
+    )
     select
       substring(url from 'http[s]*://([^/$]+)') as "Domain",
       count(*)
@@ -206,10 +226,18 @@ query "hackernews_top_10_domains_by_count" {
     limit
       10
   EOQ
+  param "story_type" {}
 }
 
 query "hackernews_top_10_domains_by_max_score" {
   sql = <<-EOQ
+    with stories as (
+      select * from hackernews_new where $1 = 'New'
+      union
+      select * from hackernews_top where $1 = 'Top'
+      union
+      select * from hackernews_best where $1 = 'Best'
+    )
     select
       substring(url from 'http[s]*://([^/$]+)') as "Domain",
       max(score::int) as "Max Score"
@@ -224,4 +252,5 @@ query "hackernews_top_10_domains_by_max_score" {
     limit
       10
   EOQ
+  param "story_type" {}
 }
