@@ -21,7 +21,7 @@ dashboard "hackernews_sources" {
       }
 
       input "domain" {
-        title    = "Select a Domain:"
+        title    = "Select a domain:"
         width = 6
         query = query.hackernews_domain_input
         args  = {

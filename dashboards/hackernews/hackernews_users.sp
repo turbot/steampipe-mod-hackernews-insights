@@ -20,7 +20,7 @@ dashboard "hackernews_users" {
 
     chart {
       width = 6
-      title = "Top 10 Active Uers (Last 24 Hour)"
+      title = "Top 10 Active Users (Last 24 Hour)"
       query = query.hackernews_ten_most_active_users_by_story
       args = [
         self.input.story_type
@@ -29,7 +29,7 @@ dashboard "hackernews_users" {
 
     chart {
       width = 6
-      title = "Top 10 People By Karma Points"
+      title = "Top 10 Users By Karma Points"
       args = [
         self.input.story_type
       ]
