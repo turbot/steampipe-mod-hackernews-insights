@@ -187,7 +187,8 @@ query "hackernews_source_detail" {
     )
     select
       h.id as "Id",
-      to_char(h.time::timestamptz, 'MM-DD hHH24') as "Time",
+      -- to_char(h.time::timestamptz, 'MM-DD hHH24') as "Time",
+      h.time as "Time",
       h.score as "Score",
       h.url as "URL",
       h.title as "Title"

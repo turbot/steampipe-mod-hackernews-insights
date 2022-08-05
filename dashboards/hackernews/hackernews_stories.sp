@@ -58,7 +58,8 @@ container {
           id as "ID",
           by as "By",
           title as "Title",
-          to_char(time::timestamptz, 'MM-DD hHH24') as "Time",
+          time as "Time",
+          -- to_char(time::timestamptz, 'MM-DD hHH24') as "Time",
           case
             when url = '<null>' then ''
             else url
@@ -98,7 +99,7 @@ container {
       }
 
       column "By" {
-        href = "http://localhost:9194/hackernews_insights.dashboard.hackernews_user_submissions?input.hn_user={{.'By'}}"
+        href = "https://news.ycombinator.com/user?id={{.'By'}}"
       }
     }
   }
@@ -117,7 +118,8 @@ query "hacker_news_stories" {
   select
     id as "ID",
     by as "By",
-    to_char(time::timestamptz, 'MM-DD hHH24') as "Time",
+    -- to_char(time::timestamptz, 'MM-DD hHH24') as "Time",
+    time as "Time",
     now()::date - time::date as "Age in Days",
     title as "Title",
     score::int as "Score",

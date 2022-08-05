@@ -67,7 +67,7 @@ query "hackernews_people_list" {
       u.id as "Id",
       to_timestamp(u.created::int) as "Created",
       u.karma as "Karma",
-      jsonb_array_length(u.submitted) as "Submitted Items"
+      jsonb_array_length(u.submitted) as "Submitted_Items"
     from
       test as t left join
       hackernews_user as u on u.id = t.label

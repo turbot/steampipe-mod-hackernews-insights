@@ -1,6 +1,6 @@
 dashboard "hackernews_job_report" {
 
-  title = "Hacker News Job Report"
+  title = "Hacker News Jobs Report"
   documentation = file("./dashboards/hackernews/docs/hackernews_job_report.md")
 
   tags = merge(local.hackernews_common_tags, {
@@ -81,7 +81,8 @@ query "hackernews_job_search" {
       id as "ID",
       by as "By",
       title as "Title",
-      to_char(time::timestamptz, 'YYYY-MM-DD') as "Time",
+      time as "Time",
+      -- to_char(time::timestamptz, 'YYYY-MM-DD') as "Time",
       case
         when url = '<null>' then ''
         else url
