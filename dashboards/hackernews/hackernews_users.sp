@@ -96,9 +96,7 @@ query "hackernews_ten_most_active_users_by_story" {
         and $1 = 'New'
       group by
         by
-
       union
-
       select
         by,
         count(*) as story_count
@@ -106,14 +104,12 @@ query "hackernews_ten_most_active_users_by_story" {
         hackernews_top
       where
         type = 'story'
-        and time::timestamptz > now() - interval '7 day'
+        and time::timestamptz > now() - interval '1 day'
         and not deleted
         and $1 = 'Top'
       group by
         by
-
       union
-
         select
         by,
         count(*) as story_count
@@ -121,7 +117,7 @@ query "hackernews_ten_most_active_users_by_story" {
         hackernews_best
       where
         type = 'story'
-        and time::timestamptz > now() - interval '7 day'
+        and time::timestamptz > now() - interval '1 day'
         and not deleted
         and $1 = 'Best'
       group by

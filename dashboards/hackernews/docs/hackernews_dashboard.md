@@ -1,6 +1,5 @@
 This dashboard answers the following questions:
 
-- How many stories are there?
 - How many Ask HN are there?
 - How many Show HN are there?
 - What is the max and avg score of the story?

@@ -4,13 +4,13 @@ mod "hackernews_insights" {
   description   = "Create dashboards and reports for your Hacker News using Steampipe."
   color         = "#FF6600"
   documentation = file("./docs/index.md")
-  icon          = "/images/mods/turbot/alicloud-insights.svg"
+  icon          = "/images/mods/turbot/hackernews-insights.svg"
   categories    = ["hackernews", "dashboard", "public cloud"]
 
   opengraph {
     title       = "Steampipe Mod for Hacker News Insights"
     description = "Create dashboards and reports for your Hacker News using Steampipe."
-    #image       = "/images/mods/turbot/alicloud-insights-social-graphic.png"
+    #image       = "/images/mods/turbot/hackernews-insights-social-graphic.png"
   }
 
   require {

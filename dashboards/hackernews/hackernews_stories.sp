@@ -8,11 +8,11 @@ dashboard "hackernews_stories" {
    })
 
   input "story_type" {
-    title    = "Stories:"
+    title  = "Stories:"
     option "New" {}
     option "Top" {}
     option "Best" {}
-    width       = 4
+    width  = 4
   }
 
 container {
