@@ -8,11 +8,11 @@ dashboard "hackernews_stories" {
    })
 
   input "story_type" {
-    title    = "Stories:"
+    title  = "Stories:"
     option "New" {}
     option "Top" {}
     option "Best" {}
-    width       = 4
+    width  = 4
   }
 
 container {
@@ -98,7 +98,7 @@ container {
       }
 
       column "By" {
-        href = "http://localhost:9194/hackernews_insights.dashboard.hackernews_user_submissions?input.hn_user={{.'By'}}"
+        href = "https://news.ycombinator.com/user?id={{.'By'}}"
       }
     }
   }

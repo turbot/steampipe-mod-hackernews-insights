@@ -261,15 +261,13 @@ dashboard "hackernews_dashboard" {
 
 query "hackernews_ask_count" {
   sql = <<-EOQ
-    select
-      count(*) as "Ask HN" from hackernews_ask_hn
+    select count(*) as "Ask HN" from hackernews_ask_hn
   EOQ
 }
 
 query "hackernews_show_count" {
   sql = <<-EOQ
-    select
-      count(*) as "Show HN" from hackernews_show_hn
+    select count(*) as "Show HN" from hackernews_show_hn
   EOQ
 }
 
@@ -277,15 +275,15 @@ query "hackernews_show_count" {
 
 query "hackernews_max_score" {
   sql = <<-EOQ
-  with stories as (
-    select * from hackernews_new where $1 = 'New'
-    union
-    select * from hackernews_top where $1 = 'Top'
-    union
-    select * from hackernews_best where $1 = 'Best'
-    )
-    select max(score) as "Max Score" from stories
-  EOQ
+    with stories as (
+      select * from hackernews_new where $1 = 'New'
+      union
+      select * from hackernews_top where $1 = 'Top'
+      union
+      select * from hackernews_best where $1 = 'Best'
+      )
+      select max(score) as "Max Score" from stories
+   EOQ
   param "story_type" {}
 }
 
@@ -299,8 +297,7 @@ query "hackernews_avg_score" {
       select * from hackernews_best where $1 = 'Best'
     )
     select
-      round(avg(score), 1) as "Avg Score"
-    from hackernews_new
+      round(avg(score), 1) as "Avg Score" from hackernews_new
   EOQ
   param "story_type" {}
 }
@@ -332,7 +329,7 @@ query "hackernews_user_with_greater_than_5_post" {
       by,
       count(*) as posts
       from
-        hackernews_new where $1 = 'New'
+        hackernews_new where $1 = 'New' and by is not null
       group by
         by
       order by
@@ -342,7 +339,7 @@ query "hackernews_user_with_greater_than_5_post" {
         by,
       count(*) as posts
       from
-        hackernews_top where $1 = 'Top'
+        hackernews_top where $1 = 'Top' and by is not null
       group by
         by
       order by
@@ -352,7 +349,7 @@ query "hackernews_user_with_greater_than_5_post" {
         by,
       count(*) as posts
       from
-        hackernews_best where $1 = 'Best'
+        hackernews_best where $1 = 'Best' and by is not null
       group by
         by
       order by

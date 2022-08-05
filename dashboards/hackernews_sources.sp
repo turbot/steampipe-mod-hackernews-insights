@@ -13,15 +13,15 @@ dashboard "hackernews_sources" {
     container {
 
       input "story_type" {
-        title    = "Stories:"
+        title = "Stories:"
         option "New" {}
         option "Top" {}
         option "Best" {}
-        width       = 4
+        width  = 4
       }
 
       input "domain" {
-        title    = "Select a domain:"
+        title = "Select a domain:"
         width = 6
         query = query.hackernews_domain_input
         args  = {
