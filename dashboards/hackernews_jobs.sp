@@ -1,7 +1,7 @@
 dashboard "hackernews_job_report" {
 
-  title = "Hacker News Job Report"
-  documentation = file("./dashboards/hackernews/docs/hackernews_job_report.md")
+  title = "Hacker News Jobs"
+  documentation = file("./dashboards/docs/hackernews_job_report.md")
 
   tags = merge(local.hackernews_common_tags, {
     type = "Report"
@@ -11,7 +11,7 @@ dashboard "hackernews_job_report" {
     width = 12
 
     chart {
-      title = "Jobs By Days (Last 10 days)"
+      title = "Jobs by Days (Last 10 Days)"
       width = 4
       query = query.hackernews_jobs_by_days
     }
@@ -19,14 +19,14 @@ dashboard "hackernews_job_report" {
     chart {
       width = 4
       type = "donut"
-      title = "Jobs By Role"
+      title = "Jobs by Role"
       query = query.hackernews_job_by_type
     }
 
     chart {
       width = 4
       type = "donut"
-      title = "Jobs By Technology"
+      title = "Jobs by Technology"
       query = query.hackernews_job_by_technology
     }
 
@@ -36,9 +36,9 @@ dashboard "hackernews_job_report" {
     title = "Job Search"
 
     input "job_search_term" {
-      width = 4
-      placeholder = "job_search_term (matches in urls or titles, can be regex)"
-      type = "text"
+      width       = 4
+      placeholder = "job search term (matches in URLs or titles, can be regex)"
+      type        = "text"
     }
 
   }
@@ -80,15 +80,15 @@ query "hackernews_job_search" {
     select
       id as "ID",
       by as "By",
-      title as "Title",
       to_char(time::timestamptz, 'YYYY-MM-DD') as "Time",
+      score as "Score",
+      title as "Title",
       case
         when url = '<null>' then ''
         else url
-      end as "URL",
-      score as "Score",
-      descendants as "Comments",
-      text as "Text"
+      end as "URL"
+      -- TODO: Cleanup HTML in text before re-adding
+      --text as "Text"
     from
       hackernews_job
     where

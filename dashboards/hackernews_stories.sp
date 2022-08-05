@@ -1,7 +1,7 @@
 dashboard "hackernews_stories" {
 
   title = "Hacker News Stories"
-  documentation = file("./dashboards/hackernews/docs/hackernews_stories.md")
+  documentation = file("./dashboards/docs/hackernews_stories.md")
 
   tags = merge(local.hackernews_common_tags, {
     type = "Report"
@@ -19,7 +19,7 @@ container {
 
   input "search_term" {
     width = 4
-    placeholder = "search_term (matches in urls or titles, can be regex)"
+    placeholder = "search term (matches in URLs or titles, can be regex)"
     type = "text"
     args  = {
       story_type = self.input.story_type.value
@@ -57,14 +57,14 @@ container {
         select
           id as "ID",
           by as "By",
+          to_char(time::timestamptz, 'YYYY-MM-DD HH24:MI:SS') as "Time",
+          score as "Score",
+          descendants as "Comments",
           title as "Title",
-          to_char(time::timestamptz, 'MM-DD hHH24') as "Time",
           case
             when url = '<null>' then ''
             else url
-          end as "URL",
-          score as "Score",
-          descendants as "Comments"
+          end as "URL"
         from
           stories
         where
@@ -117,13 +117,10 @@ query "hacker_news_stories" {
   select
     id as "ID",
     by as "By",
-    to_char(time::timestamptz, 'MM-DD hHH24') as "Time",
-    now()::date - time::date as "Age in Days",
-    title as "Title",
+    to_char(time::timestamptz, 'YYYY-MM-DD HH24:MI:SS') as "Time",
     score::int as "Score",
     descendants::int as "Comments",
-    dead as "Dead",
-    deleted as "Deleted",
+    title as "Title",
     url as "URL"
   from
     stories

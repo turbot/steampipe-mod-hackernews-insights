@@ -1,7 +1,7 @@
 dashboard "hackernews_users" {
 
   title         = "Hacker News Users"
-  documentation = file("./dashboards/hackernews/docs/hacker_news_users.md")
+  documentation = file("./dashboards/docs/hacker_news_users.md")
 
   tags = merge(local.hackernews_common_tags, {
     type = "Report"
@@ -20,7 +20,7 @@ dashboard "hackernews_users" {
 
     chart {
       width = 6
-      title = "Top 10 Active Users (Last 24 Hour)"
+      title = "Top 10 Active Users (Last 24 Hours)"
       query = query.hackernews_ten_most_active_users_by_story
       args = [
         self.input.story_type
@@ -29,7 +29,7 @@ dashboard "hackernews_users" {
 
     chart {
       width = 6
-      title = "Top 10 Users By Karma Points"
+      title = "Top 10 Users by Karma Points"
       args = [
         self.input.story_type
       ]
@@ -85,8 +85,8 @@ query "hackernews_ten_most_active_users_by_story" {
   sql = <<-EOQ
     with story_count as (
       select
-        by,
-        count(*) as story_count
+        by as "By",
+        count(*) as "Story Count"
       from
         hackernews_new
       where
@@ -149,7 +149,7 @@ query "hackernews_users_by_karma_point" {
       (select distinct by as label from hackernews_best where $1 = 'Best' order by by)
     )
     select
-      u.id,
+      u.id as "ID",
       u.karma as "Karma"
     from
       people as t left join

@@ -1,7 +1,7 @@
 dashboard "hackernews_dashboard" {
 
   title         = "Hacker News Dashboard"
-  documentation = file("./dashboards/hackernews/docs/hackernews_dashboard.md")
+  documentation = file("./dashboards/docs/hackernews_dashboard.md")
 
   tags = merge(local.hackernews_common_tags, {
     type = "Dashboard"
@@ -406,7 +406,7 @@ query "hackernews_stories_by_hour" {
       (select * from hackernews_best where $1 = 'Best')
     )
     select
-      to_char(time,'MM:DD HH24') as hour,
+      to_char(time,'MM-DD HH24:00') as hour,
       count(*)
     from
       data
@@ -422,7 +422,7 @@ query "hackernews_ask_and_show_by_hour" {
   sql = <<-EOQ
     with ask_hn as (
       select
-        to_char(time::timestamptz,'MM:DD HH24') as hour
+        to_char(time::timestamptz,'MM-DD HH24:00') as hour
       from
         hackernews_new
       where
@@ -431,7 +431,7 @@ query "hackernews_ask_and_show_by_hour" {
     ),
     show_hn as (
       select
-        to_char(time::timestamptz,'MM:DD HH24') as hour
+        to_char(time::timestamptz,'MM-DD HH24:00') as hour
       from
         hackernews_new
       where

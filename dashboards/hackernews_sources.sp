@@ -1,7 +1,7 @@
 dashboard "hackernews_sources" {
 
   title         = "Hacker News Sources"
-  documentation = file("./dashboards/hackernews/docs/hackernews_sources.md")
+  documentation = file("./dashboards/docs/hackernews_sources.md")
 
   tags = merge(local.hackernews_common_tags, {
     type = "Report"
@@ -30,8 +30,9 @@ dashboard "hackernews_sources" {
       }
 
       table {
-        args = [ self.input.story_type.value, self.input.domain ]
+        args  = [ self.input.story_type.value, self.input.domain ]
         query = query.hackernews_source_detail
+
         column "Id" {
           href = "https://news.ycombinator.com/item?id={{.'Id'}}"
         }
@@ -160,10 +161,10 @@ query "hackernews_domains" {
     select
       a.domain as "Domain",
       c.count as "Count",
-      a.max_score as "Max_Score",
-      round(a.avg_score, 1) as "Avg_Score",
-      a.max_comments as "Max_Comments",
-      round(a.avg_comments, 1) as "Avg_Comments"
+      a.max_score as "Max Score",
+      round(a.avg_score, 1) as "Avg Score",
+      a.max_comments as "Max Comments",
+      round(a.avg_comments, 1) as "Avg Comments"
     from
       avg_and_max a
     join
@@ -186,11 +187,11 @@ query "hackernews_source_detail" {
       select * from hackernews_best where $1 = 'Best'
     )
     select
-      h.id as "Id",
-      to_char(h.time::timestamptz, 'MM-DD hHH24') as "Time",
+      h.id as "ID",
+      to_char(h.time::timestamptz, 'YYYY-MM-DD HH24:MI:SS') as "Time",
       h.score as "Score",
-      h.url as "URL",
-      h.title as "Title"
+      h.title as "Title",
+      h.url as "URL"
     from
       stories h
     where
