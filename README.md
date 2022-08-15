@@ -2,7 +2,7 @@
 
 A Hacker News dashboarding tool that can be used to view dashboards and reports across the latest Hacker News stories, jobs, and other items.
 
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-aws-insights/main/docs/images/hacker_news_dashboard.png)
+![image](https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hacker_news_dashboard.png)
 
 ## Overview
 
