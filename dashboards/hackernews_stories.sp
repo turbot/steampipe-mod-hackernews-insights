@@ -57,7 +57,7 @@ dashboard "hackernews_stories" {
       args = [
         self.input.story_type
       ]
-      query = query.hacker_news_stories
+      query = query.hackernews_stories
 
       column "By" {
         href = "https://news.ycombinator.com/user?id={{.'By'}}"
@@ -102,8 +102,7 @@ query "hackernews_avg_comments" {
   param "story_type" {}
 }
 
-
-query "hacker_news_stories" {
+query "hackernews_stories" {
   sql = <<-EOQ
   with stories as (
     select * from hackernews_new where $1 = 'New'

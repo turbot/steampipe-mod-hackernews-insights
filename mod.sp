@@ -1,21 +1,21 @@
 mod "hackernews_insights" {
   # hub metadata
   title         = "Hacker News Insights"
-  description   = "Create dashboards and reports for your Hacker News using Steampipe."
+  description   = "Create dashboards and reports for Hacker News using Steampipe."
   color         = "#FF6600"
   documentation = file("./docs/index.md")
   icon          = "/images/mods/turbot/hackernews-insights.svg"
-  categories    = ["hackernews", "dashboard", "public cloud"]
+  categories    = ["hackernews", "dashboard"]
 
   opengraph {
     title       = "Steampipe Mod for Hacker News Insights"
-    description = "Create dashboards and reports for your Hacker News using Steampipe."
-    #image       = "/images/mods/turbot/hackernews-insights-social-graphic.png"
+    description = "Create dashboards and reports for Hacker News using Steampipe."
+    image       = "/images/mods/turbot/hackernews-insights-social-graphic.png"
   }
 
   require {
     plugin "hackernews" {
-      version = "0.3.1"
+      version = "0.4.0"
     }
   }
 }
@@ -94,7 +94,6 @@ locals {
 }
 
 # https://steampipe.io/docs/reference/mod-resources/dashboard#color
-
 chart "companies_base" {
   series "mentions" {
     point "Amazon" {

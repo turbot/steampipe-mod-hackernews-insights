@@ -4,19 +4,21 @@ repository: "https://github.com/turbot/steampipe-mod-hackernews-insights"
 
 # Hacker News Insights Mod
 
-Create dashboards and reports for your Hacker News items using Steampipe.
+Create dashboards and reports for Hacker News stories, jobs, and other items using Steampipe.
 
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hacker_news_sources.png" width="50%" type="thumbnail"/>
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hacker_news_stories.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_stories.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_sources.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_jobs.png" width="50%" type="thumbnail"/>
 
 ## Overview
 
 Dashboards can help answer questions like:
 
-- What are top rated stories?
-- How many Show HN are there?
-- Who are top 10 active hacker news users in last 24 hours
-- What are the top 10 domains by max score?
+- What companies, languages, and clouds were recently mentioned in stories?
+- What roles and technologies were recently mentioned in jobs?
+- What are the most popular domains among submitted stories?
+- What are the latest Ask and Show HNs?
 
 ## References
 

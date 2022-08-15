@@ -1,6 +1,6 @@
 # Hacker News Insights Mod for Steampipe
 
-A Hacker News dashboarding tool that can be used to view dashboards and reports across latestHacker News items .
+A Hacker News dashboarding tool that can be used to view dashboards and reports across the latest Hacker News stories, jobs, and other items.
 
 ![image](https://raw.githubusercontent.com/turbot/steampipe-mod-aws-insights/main/docs/images/hacker_news_dashboard.png)
 
@@ -8,10 +8,10 @@ A Hacker News dashboarding tool that can be used to view dashboards and reports 
 
 Dashboards can help answer questions like:
 
-- What are top rated stories?
-- How many Show HN are there?
-- Who are top 10 active hacker news users in last 24 hours
-- What are the top 10 domains by max score?
+- What companies, languages, and clouds were recently mentioned in stories?
+- What roles and technologies were recently mentioned in jobs?
+- What are the most popular domains among submitted stories?
+- What are the latest Ask and Show HNs?
 
 ## Getting started
 

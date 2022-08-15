@@ -19,17 +19,6 @@ dashboard "hackernews_dashboard" {
 
     # Analysis
     card {
-      query = query.hackernews_ask_count
-      width = 2
-    }
-
-    card {
-      query = query.hackernews_show_count
-      width = 2
-    }
-
-    # Assessments
-    card {
       width = 2
       query = query.hackernews_max_score
       args = [
@@ -43,6 +32,16 @@ dashboard "hackernews_dashboard" {
       args = [
         self.input.story_type
       ]
+    }
+
+    card {
+      query = query.hackernews_ask_count
+      width = 2
+    }
+
+    card {
+      query = query.hackernews_show_count
+      width = 2
     }
 
     card {
@@ -270,8 +269,6 @@ query "hackernews_show_count" {
     select count(*) as "Show HN" from hackernews_show_hn
   EOQ
 }
-
-# Assessments Queries
 
 query "hackernews_max_score" {
   sql = <<-EOQ
