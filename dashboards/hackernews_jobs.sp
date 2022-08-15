@@ -1,7 +1,7 @@
-dashboard "hackernews_job_report" {
+dashboard "hackernews_jobs" {
 
   title = "Hacker News Jobs"
-  documentation = file("./dashboards/docs/hackernews_job_report.md")
+  documentation = file("./dashboards/docs/hackernews_jobs.md")
 
   tags = merge(local.hackernews_common_tags, {
     type = "Report"

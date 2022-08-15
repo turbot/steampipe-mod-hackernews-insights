@@ -84,7 +84,7 @@ dashboard "hackernews_sources" {
       args = [ self.input.story_type ]
       column "Domain" {
         wrap = "all"
-        href = "http://localhost:9194/hackernews_insights.dashboard.hackernews_sources_report?input.domain={{.'Domain'}}"
+        href = "https://{{.'Domain'}}"
       }
     }
   }
