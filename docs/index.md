@@ -1,8 +1,15 @@
-# Hacker News Insights Mod for Steampipe
+---
+repository: "https://github.com/turbot/steampipe-mod-hackernews-insights"
+---
 
-A Hacker News dashboarding tool that can be used to view dashboards and reports across the latest Hacker News stories, jobs, and other items.
+# Hacker News Insights Mod
 
-![image](https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hacker_news_dashboard.png)
+Create dashboards and reports for Hacker News stories, jobs, and other items using Steampipe.
+
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_stories.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_sources.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_jobs.png" width="50%" type="thumbnail"/>
 
 ## Overview
 
@@ -12,6 +19,16 @@ Dashboards can help answer questions like:
 - What roles and technologies were recently mentioned in jobs?
 - What are the most popular domains among submitted stories?
 - What are the latest Ask and Show HNs?
+
+## References
+
+[Steampipe](https://steampipe.io) is an open source CLI to instantly query cloud APIs using SQL.
+
+[Steampipe Mods](https://steampipe.io/docs/reference/mod-resources#mod) are collections of `named queries`, codified `controls` that can be used to test current configuration of your cloud resources against a desired configuration, and `dashboards` that organize and display key pieces of information.
+
+## Documentation
+
+- **[Dashboards →](https://hub.steampipe.io/mods/turbot/hackernews_insights/dashboards)**
 
 ## Getting started
 
