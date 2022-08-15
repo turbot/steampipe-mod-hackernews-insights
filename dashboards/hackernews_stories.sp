@@ -14,75 +14,40 @@ dashboard "hackernews_stories" {
     option "Best" {}
     width  = 4
   }
-
-container {
-
-  input "search_term" {
-    width = 4
-    placeholder = "search term (matches in URLs or titles, can be regex)"
-    type = "text"
-    args  = {
-      story_type = self.input.story_type.value
-    }
-  }
-
-  text "search_examples" {
-    width = 8
-    value = <<-EOM
-    Examples:
-    [python](http://localhost:9194/hackernews_insights.dashboard.hackernews_stories?input.story_type=New&input.search_term=python)
-    [github](http://localhost:9194/hackernews_insights.dashboard.hackernews_stories?input.story_type=New&input.search_term=github)
-    [wikipedia/wiki](http://localhost:9194/hackernews_insights.dashboard.hackernews_stories?input.story_type=New&input.search_term=wikipedia.org%2Fwiki),
-    [nytimes.+/technology](http://localhost:9194/hackernews_insights.dashboard.hackernews_stories?input.story_type=New&input.search_term=nytimes.%2b/technology)
-    EOM
-  }
-
-}
-
   container {
 
-    table {
+    card {
+      width = 2
+      query = query.hackernews_max_score
       args = [
-        self.input.story_type,
-        self.input.search_term
+        self.input.story_type
       ]
-      sql = <<-EOQ
-        with stories as (
-          select * from hackernews_new where $1 = 'New'
-          union
-          select * from hackernews_top where $1 = 'Top'
-          union
-          select * from hackernews_best where $1 = 'Best'
-        )
-        select
-          id as "ID",
-          by as "By",
-          to_char(time::timestamptz, 'YYYY-MM-DD HH24:MI:SS') as "Time",
-          score as "Score",
-          descendants as "Comments",
-          title as "Title",
-          case
-            when url = '<null>' then ''
-            else url
-          end as "URL"
-        from
-          stories
-        where
-          title ~* $2 or url ~* $2
-        order by
-          score::int desc
-      EOQ
-      column "URL" {
-        wrap = "all"
-      }
-      column "ID" {
-        href = "https://news.ycombinator.com/item?id={{.'ID'}}"
-      }
-      column "By" {
-        href = "https://news.ycombinator.com/user?id={{.'By'}}"
-      }
-
     }
+
+    card {
+      width = 2
+      query = query.hackernews_avg_score
+      args = [
+        self.input.story_type
+      ]
+    }
+
+    card {
+      width = 2
+      query = query.hackernews_max_comments
+      args = [
+        self.input.story_type
+      ]
+    }
+
+    card {
+      width = 2
+      query = query.hackernews_avg_comments
+      args = [
+        self.input.story_type
+      ]
+    }
+
 
   }
 
@@ -93,17 +58,50 @@ container {
         self.input.story_type
       ]
       query = query.hacker_news_stories
-      column "ID" {
-        href = "https://news.ycombinator.com/item?id={{.'ID'}}"
-      }
 
       column "By" {
         href = "https://news.ycombinator.com/user?id={{.'By'}}"
+      }
+      column "ID" {
+        href = "https://news.ycombinator.com/item?id={{.'ID'}}"
+      }
+      column "URL" {
+        wrap = "all"
       }
     }
   }
 
 }
+
+query "hackernews_max_comments" {
+  sql = <<-EOQ
+    with stories as (
+      select * from hackernews_new where $1 = 'New'
+      union
+      select * from hackernews_top where $1 = 'Top'
+      union
+      select * from hackernews_best where $1 = 'Best'
+      )
+      select max(descendants) as "Max Comments" from stories
+   EOQ
+  param "story_type" {}
+}
+
+query "hackernews_avg_comments" {
+  sql = <<-EOQ
+    with stories as (
+      select * from hackernews_new where $1 = 'New'
+      union
+      select * from hackernews_top where $1 = 'Top'
+      union
+      select * from hackernews_best where $1 = 'Best'
+    )
+    select
+      round(avg(descendants), 1) as "Avg Comments" from hackernews_new
+  EOQ
+  param "story_type" {}
+}
+
 
 query "hacker_news_stories" {
   sql = <<-EOQ
@@ -118,15 +116,12 @@ query "hacker_news_stories" {
     id as "ID",
     by as "By",
     to_char(time::timestamptz, 'YYYY-MM-DD HH24:MI:SS') as "Time",
-    score::int as "Score",
-    descendants::int as "Comments",
+    score as "Score",
+    descendants as "Comments",
     title as "Title",
     url as "URL"
   from
     stories
-  where
-    score is not null
-    and descendants is not null
   order by
     score desc,
     descendants desc;
@@ -134,5 +129,3 @@ query "hacker_news_stories" {
 
   param "story_type" {}
 }
-
-

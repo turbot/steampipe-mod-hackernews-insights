@@ -32,27 +32,16 @@ dashboard "hackernews_job_report" {
 
   }
 
-  container {
-    title = "Job Search"
-
-    input "job_search_term" {
-      width       = 4
-      placeholder = "job search term (matches in URLs or titles, can be regex)"
-      type        = "text"
-    }
-
-  }
-
   table {
-    args = [
-      self.input.job_search_term
-    ]
     query = query.hackernews_job_search
+    column "By" {
+      href = "https://news.ycombinator.com/user?id={{.'By'}}"
+    }
     column "ID" {
       href = "https://news.ycombinator.com/item?id={{.'ID'}}"
     }
-    column "By" {
-      href = "https://news.ycombinator.com/user?id={{.'By'}}"
+    column "URL" {
+      wrap = "all"
     }
 
   }
@@ -91,29 +80,26 @@ query "hackernews_job_search" {
       --text as "Text"
     from
       hackernews_job
-    where
-      title ~* $1 or url ~* $1 or text ~* $1
     order by
-      score::int desc;
+      time desc,
+      score desc;
   EOQ
-
-  param "job_search_term" {}
 }
 
 query "hackernews_job_by_type" {
   sql = <<-EOQ
     select
       case
+        when title ilike '%designer%' then 'Designer'
+        when title ~* 'cloud.*engineer' then 'Cloud Engineer'
         when title ~* 'data.*analyst' then 'Data Analyst'
-        when title ~* 'full.*stack' then 'Full Stack Engineer'
-        when title ~* 'web.*developer' then 'Web Developer'
         when title ~* 'data.*engineer' then 'Data Engineer'
         when title ~* 'front.*end' then 'Front-end Engineer'
-        when title ~* 'support.*engineer' then 'Support Engineer'
+        when title ~* 'full.*stack' then 'Full Stack Engineer'
         when title ~* 'machine.*learning' or title ~* '\sML' then 'Machine Learning Engineer'
-        when title ~* 'software.*engineers' then 'Software Engineer'
-        when title ~* 'cloud.*engineer' then 'Cloud Engineer'
-        when title ilike '%designer%' then 'Designer'
+        when title ~* 'software.*engineer' then 'Software Engineer'
+        when title ~* 'support.*engineer' then 'Support Engineer'
+        when title ~* 'web.*developer' then 'Web Developer'
         else 'Other'
        end as job_type,
       count(*)
@@ -128,14 +114,15 @@ query "hackernews_job_by_technology" {
   sql = <<-EOQ
     select
       case
-        when title ~* 'php' or text ~* 'php' then 'PHP'
-        when title ~* 'react' or text ~* 'react' then 'React'
-        when title ~* 'python' or text ~* 'python' then 'Python'
+        when title ~* '\sjavaScript\s' or text ~* '\sjavaScript\s' then 'JavaScript'
         when title ~* 'android' or text ~* 'android' then 'Android'
         when title ~* 'java' or text ~* 'java' then 'Java'
-        when title ~* 'rust' or text ~* 'rust' then 'Rust'
         when title ~* 'kubernetes' or title ~* 'K8s' or text ~* 'kubernetes' or text ~* 'K8s'then 'Kubernetes'
-        when title ~* '\sjavaScript\s' or text ~* '\sjavaScript\s' then 'JavaScript'
+        when title ~* 'php' or text ~* 'php' then 'PHP'
+        when title ~* 'python' or text ~* 'python' then 'Python'
+        when title ~* 'react' or text ~* 'react' then 'React'
+        when title ~* 'rust' or text ~* 'rust' then 'Rust'
+        when title ~* 'sql' or text ~* 'sql' then 'SQL'
         else 'Other'
        end as job_technology,
       count(*)

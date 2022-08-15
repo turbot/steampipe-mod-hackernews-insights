@@ -20,7 +20,7 @@ dashboard "hackernews_users" {
 
     chart {
       width = 6
-      title = "Top 10 Active Users (Last 24 Hours)"
+      title = "Top 10 Active Users"
       query = query.hackernews_ten_most_active_users_by_story
       args = [
         self.input.story_type
@@ -45,8 +45,8 @@ dashboard "hackernews_users" {
       args = [
         self.input.story_type
       ]
-      column "Id" {
-        href = "https://news.ycombinator.com/user?id={{.'Id'}}"
+      column "ID" {
+        href = "https://news.ycombinator.com/user?id={{.'ID'}}"
       }
     }
 
@@ -64,10 +64,10 @@ query "hackernews_people_list" {
       select distinct by as label from hackernews_best where $1 = 'Best'
     )
     select
-      u.id as "Id",
+      u.id as "ID",
       to_timestamp(u.created::int) as "Created",
       u.karma as "Karma",
-      jsonb_array_length(u.submitted) as "Submitted_Items"
+      jsonb_array_length(u.submitted) as "Submitted Items"
     from
       test as t left join
       hackernews_user as u on u.id = t.label
@@ -75,7 +75,7 @@ query "hackernews_people_list" {
       u.id is not null
     order by
       u.id
-    limit 50;
+    --limit 50;
   EOQ
   param "story_type" {}
 }
@@ -85,13 +85,13 @@ query "hackernews_ten_most_active_users_by_story" {
   sql = <<-EOQ
     with story_count as (
       select
-        by as "By",
-        count(*) as "Story Count"
+        by,
+        count(*) as story_count
       from
         hackernews_new
       where
         type = 'story'
-        and time::timestamptz > now() - interval '1 day'
+        --and time::timestamptz > now() - interval '1 day'
         and not deleted
         and $1 = 'New'
       group by
@@ -104,7 +104,7 @@ query "hackernews_ten_most_active_users_by_story" {
         hackernews_top
       where
         type = 'story'
-        and time::timestamptz > now() - interval '1 day'
+        --and time::timestamptz > now() - interval '1 day'
         and not deleted
         and $1 = 'Top'
       group by
@@ -117,7 +117,7 @@ query "hackernews_ten_most_active_users_by_story" {
         hackernews_best
       where
         type = 'story'
-        and time::timestamptz > now() - interval '1 day'
+        --and time::timestamptz > now() - interval '1 day'
         and not deleted
         and $1 = 'Best'
       group by
@@ -130,7 +130,7 @@ query "hackernews_ten_most_active_users_by_story" {
       story_count s
     order by
       s.story_count desc
-    limit 15
+    limit 10
   EOQ
   param "story_type" {}
 }
@@ -148,10 +148,11 @@ query "hackernews_users_by_karma_point" {
       u.id as "ID",
       u.karma as "Karma"
     from
-      people as t left join
-      hackernews_user as u on u.id = t.label
+      people as p left join
+      hackernews_user as u on u.id = p.label
     where
       u.id is not null
+      and u.karma is not null
     order by
       u.karma desc
     limit 10;

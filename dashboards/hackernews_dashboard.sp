@@ -403,7 +403,7 @@ query "hackernews_stories_by_hour" {
       (select * from hackernews_best where $1 = 'Best')
     )
     select
-      to_char(time,'MM-DD HH24:00') as hour,
+      to_char(time::timestamptz,'MM-DD HH24:00') as hour,
       count(*)
     from
       data

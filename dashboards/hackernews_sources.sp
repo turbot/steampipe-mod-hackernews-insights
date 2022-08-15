@@ -10,40 +10,12 @@ dashboard "hackernews_sources" {
   container {
     width = 12
 
-    container {
-
-      input "story_type" {
-        title = "Stories:"
-        option "New" {}
-        option "Top" {}
-        option "Best" {}
-        width  = 4
-      }
-
-      input "domain" {
-        title = "Select a domain:"
-        width = 6
-        query = query.hackernews_domain_input
-        args  = {
-          story_type = self.input.story_type.value
-        }
-      }
-
-      table {
-        args  = [ self.input.story_type.value, self.input.domain ]
-        query = query.hackernews_source_detail
-
-        column "Id" {
-          href = "https://news.ycombinator.com/item?id={{.'Id'}}"
-        }
-        column "URL" {
-          wrap = "all"
-        }
-        column "Title" {
-          wrap = "all"
-        }
-      }
-
+    input "story_type" {
+      title = "Stories:"
+      option "New" {}
+      option "Top" {}
+      option "Best" {}
+      width  = 4
     }
 
   }
@@ -65,6 +37,42 @@ dashboard "hackernews_sources" {
       width = 6
       args = [ self.input.story_type ]
       query = query.hackernews_top_10_domains_by_max_score
+    }
+
+  }
+
+  container {
+    width = 12
+
+    container {
+
+      input "domain" {
+        title = "Select a domain:"
+        width = 6
+        query = query.hackernews_domain_input
+        args  = {
+          story_type = self.input.story_type.value
+        }
+      }
+
+      table {
+        args  = [ self.input.story_type.value, self.input.domain ]
+        query = query.hackernews_source_detail
+
+        column "By" {
+          href = "https://news.ycombinator.com/user?id={{.'By'}}"
+        }
+        column "ID" {
+          href = "https://news.ycombinator.com/item?id={{.'Id'}}"
+        }
+        column "Title" {
+          wrap = "all"
+        }
+        column "URL" {
+          wrap = "all"
+        }
+      }
+
     }
 
   }
@@ -136,14 +144,14 @@ query "hackernews_domains" {
     avg_and_max as (
       select
         substring(url from 'http[s]*://([^/$]+)') as domain,
-        avg(score::int) as avg_score,
-        max(score::int) as max_score,
-        avg(descendants::int) as avg_comments,
-        max(descendants::int) as max_comments
+        avg(score) as avg_score,
+        max(score) as max_score,
+        avg(descendants) as avg_comments,
+        max(descendants) as max_comments
       from
         hackernews_new
-      where
-        descendants is not null
+      --where
+        --descendants is not null
       group by
         substring(url from 'http[s]*://([^/$]+)')
     ),
@@ -188,8 +196,10 @@ query "hackernews_source_detail" {
     )
     select
       h.id as "ID",
+      h.by as "By",
       to_char(h.time::timestamptz, 'YYYY-MM-DD HH24:MI:SS') as "Time",
       h.score as "Score",
+      h.descendants as "Comments",
       h.title as "Title",
       h.url as "URL"
     from
@@ -197,7 +207,7 @@ query "hackernews_source_detail" {
     where
       h.url ~ $2
     order by
-      h.score::int desc
+      h.score desc
   EOQ
 
   param "story_type" {}
@@ -241,7 +251,7 @@ query "hackernews_top_10_domains_by_max_score" {
     )
     select
       substring(url from 'http[s]*://([^/$]+)') as "Domain",
-      max(score::int) as "Max Score"
+      max(score) as "Max Score"
     from
       hackernews_new
     where
