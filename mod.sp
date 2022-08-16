@@ -94,7 +94,7 @@ locals {
 }
 
 # https://steampipe.io/docs/reference/mod-resources/dashboard#color
-chart "companies_base" {
+chart "hackernews_dashboard_mentions_companies_base" {
   series "mentions" {
     point "Amazon" {
       color = "Purple"
@@ -144,7 +144,7 @@ chart "companies_base" {
   }
 }
 
-chart "languages_base" {
+chart "hackernews_dashboard_mentions_languages_base" {
   series "mentions" {
     point "C#" {
       color = "#823085"
@@ -206,7 +206,7 @@ chart "languages_base" {
   }
 }
 
-chart "os_base" {
+chart "hackernews_dashboard_mentions_os_base" {
   series "mentions" {
     point "Android" {
       color = "green"
@@ -226,7 +226,7 @@ chart "os_base" {
   }
 }
 
-chart "cloud_base" {
+chart "hackernews_dashboard_mentions_clouds_base" {
   series "mentions" {
     point "AWS" {
       color = "brown"
@@ -240,7 +240,7 @@ chart "cloud_base" {
   }
 }
 
-chart "db_base" {
+chart "hackernews_dashboard_mentions_dbs_base" {
   series "mentions" {
     point "DB2" {
       color = "brown"

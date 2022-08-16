@@ -28,7 +28,7 @@ dashboard "hackernews_sources" {
       width = 6
       type = "donut"
        args = [ self.input.story_type ]
-      query = query.hackernews_top_10_domains_by_count
+      query = query.hackernews_sources_top_10_domains_by_count
     }
 
     chart {
@@ -36,7 +36,7 @@ dashboard "hackernews_sources" {
       type = "donut"
       width = 6
       args = [ self.input.story_type ]
-      query = query.hackernews_top_10_domains_by_max_score
+      query = query.hackernews_sources_top_10_domains_by_max_score
     }
 
   }
@@ -49,7 +49,7 @@ dashboard "hackernews_sources" {
       input "domain" {
         title = "Select a domain:"
         width = 6
-        query = query.hackernews_domain_input
+        query = query.hackernews_sources_domain_input
         args  = {
           story_type = self.input.story_type.value
         }
@@ -57,7 +57,7 @@ dashboard "hackernews_sources" {
 
       table {
         args  = [ self.input.story_type.value, self.input.domain ]
-        query = query.hackernews_source_detail
+        query = query.hackernews_sources_detail
 
         column "By" {
           href = "https://news.ycombinator.com/user?id={{.'By'}}"
@@ -80,7 +80,7 @@ dashboard "hackernews_sources" {
   container {
     table {
       width = 12
-      query = query.hackernews_domains
+      query = query.hackernews_sources_domains
       args = [ self.input.story_type ]
       column "Domain" {
         wrap = "all"
@@ -91,7 +91,7 @@ dashboard "hackernews_sources" {
 
 }
 
-query "hackernews_domain_input" {
+query "hackernews_sources_domain_input" {
   sql = <<-EOQ
     with domains as (
       select distinct
@@ -120,7 +120,7 @@ query "hackernews_domain_input" {
   param "story_type" {}
 }
 
-query "hackernews_domains" {
+query "hackernews_sources_domains" {
   sql = <<-EOQ
     with domains as (
       select
@@ -185,7 +185,7 @@ query "hackernews_domains" {
   param "story_type" {}
 }
 
-query "hackernews_source_detail" {
+query "hackernews_sources_detail" {
   sql = <<-EOQ
     with stories as (
       select * from hackernews_new where $1 = 'New'
@@ -214,7 +214,7 @@ query "hackernews_source_detail" {
   param "domain" {}
 }
 
-query "hackernews_top_10_domains_by_count" {
+query "hackernews_sources_top_10_domains_by_count" {
   sql = <<-EOQ
     with stories as (
       select * from hackernews_new where $1 = 'New'
@@ -240,7 +240,7 @@ query "hackernews_top_10_domains_by_count" {
   param "story_type" {}
 }
 
-query "hackernews_top_10_domains_by_max_score" {
+query "hackernews_sources_top_10_domains_by_max_score" {
   sql = <<-EOQ
     with stories as (
       select * from hackernews_new where $1 = 'New'

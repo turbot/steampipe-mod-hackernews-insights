@@ -20,20 +20,20 @@ dashboard "hackernews_jobs" {
       width = 4
       type = "donut"
       title = "Jobs by Role"
-      query = query.hackernews_job_by_type
+      query = query.hackernews_jobs_by_type
     }
 
     chart {
       width = 4
       type = "donut"
       title = "Jobs by Technology"
-      query = query.hackernews_job_by_technology
+      query = query.hackernews_jobs_by_technology
     }
 
   }
 
   table {
-    query = query.hackernews_job_search
+    query = query.hackernews_jobs_search
     column "By" {
       href = "https://news.ycombinator.com/user?id={{.'By'}}"
     }
@@ -64,7 +64,7 @@ query "hackernews_jobs_by_days" {
   EOQ
 }
 
-query "hackernews_job_search" {
+query "hackernews_jobs_search" {
   sql = <<-EOQ
     select
       id as "ID",
@@ -86,7 +86,7 @@ query "hackernews_job_search" {
   EOQ
 }
 
-query "hackernews_job_by_type" {
+query "hackernews_jobs_by_type" {
   sql = <<-EOQ
     select
       case
@@ -110,7 +110,7 @@ query "hackernews_job_by_type" {
   EOQ
 }
 
-query "hackernews_job_by_technology" {
+query "hackernews_jobs_by_technology" {
   sql = <<-EOQ
     select
       case
