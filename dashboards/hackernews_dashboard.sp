@@ -103,7 +103,7 @@ dashboard "hackernews_dashboard" {
   container {
 
     chart {
-      base = chart.companies_base
+      base = chart.hackernews_dashboard_mentions_companies_base
       width = 4
       type = "donut"
       title = "Company Mentions: Last 4 Hours"
@@ -112,7 +112,7 @@ dashboard "hackernews_dashboard" {
     }
 
     chart {
-      base = chart.companies_base
+      base = chart.hackernews_dashboard_mentions_companies_base
       width = 4
       type = "donut"
       title = "Company Mentions: Last 24 Hours"
@@ -121,7 +121,7 @@ dashboard "hackernews_dashboard" {
     }
 
     chart {
-      base = chart.companies_base
+      base = chart.hackernews_dashboard_mentions_companies_base
       width = 4
       type = "donut"
       title = "Company Mentions: Last 2 Days"
@@ -133,7 +133,7 @@ dashboard "hackernews_dashboard" {
    container {
 
     chart {
-      base = chart.languages_base
+      base = chart.hackernews_dashboard_mentions_languages_base
       width = 4
       type = "donut"
       title = "Language Mentions: Last 4 Hours"
@@ -142,7 +142,7 @@ dashboard "hackernews_dashboard" {
     }
 
     chart {
-      base = chart.languages_base
+      base = chart.hackernews_dashboard_mentions_languages_base
       width = 4
       type = "donut"
       title = "Language Mentions: Last 24 Hours"
@@ -151,7 +151,7 @@ dashboard "hackernews_dashboard" {
     }
 
     chart {
-      base = chart.languages_base
+      base = chart.hackernews_dashboard_mentions_languages_base
       width = 4
       type = "donut"
       title = "Language Mentions: Last 2 Days"
@@ -164,7 +164,7 @@ dashboard "hackernews_dashboard" {
   container {
 
     chart {
-      base = chart.os_base
+      base = chart.hackernews_dashboard_mentions_os_base
       width = 4
       type = "donut"
       title = "OS Mentions: Last 4 Hours"
@@ -173,7 +173,7 @@ dashboard "hackernews_dashboard" {
     }
 
     chart {
-      base = chart.os_base
+      base = chart.hackernews_dashboard_mentions_os_base
       width = 4
       type = "donut"
       title = "OS Mentions: Last 24 Hours"
@@ -182,7 +182,7 @@ dashboard "hackernews_dashboard" {
     }
 
     chart {
-      base = chart.os_base
+      base = chart.hackernews_dashboard_mentions_os_base
       width = 4
       type = "donut"
       title = "OS Mentions: Last 2 Days"
@@ -195,7 +195,7 @@ dashboard "hackernews_dashboard" {
   container {
 
     chart {
-      base = chart.cloud_base
+      base = chart.hackernews_dashboard_mentions_clouds_base
       width = 4
       type = "donut"
       title = "Cloud Mentions: Last 4 Hours"
@@ -204,7 +204,7 @@ dashboard "hackernews_dashboard" {
     }
 
     chart {
-      base = chart.cloud_base
+      base = chart.hackernews_dashboard_mentions_clouds_base
       width = 4
       type = "donut"
       title = "Cloud Mentions: Last 24 Hours"
@@ -213,7 +213,7 @@ dashboard "hackernews_dashboard" {
     }
 
     chart {
-      base = chart.cloud_base
+      base = chart.hackernews_dashboard_mentions_clouds_base
       width = 4
       type = "donut"
       title = "Cloud Mentions: Last 2 Days"
@@ -226,7 +226,7 @@ dashboard "hackernews_dashboard" {
   container {
 
     chart {
-      base = chart.db_base
+      base = chart.hackernews_dashboard_mentions_dbs_base
       width = 4
       type = "donut"
       title = "DB Mentions: Last 4 Hours"
@@ -235,7 +235,7 @@ dashboard "hackernews_dashboard" {
     }
 
     chart {
-      base = chart.db_base
+      base = chart.hackernews_dashboard_mentions_dbs_base
       width = 4
       type = "donut"
       title = "DB Mentions: Last 24 Hours"
@@ -244,7 +244,7 @@ dashboard "hackernews_dashboard" {
     }
 
     chart {
-      base = chart.db_base
+      base = chart.hackernews_dashboard_mentions_dbs_base
       width = 4
       type = "donut"
       title = "DB mentions: Last 2 Days"
