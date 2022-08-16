@@ -1,3 +1,9 @@
+## v0.2 [2022-08-16]
+
+_Enhancements_
+
+- Updated screenshots in README and index doc for better readability.
+
 ## v0.1 [2022-08-16]
 
 _What's new?_
