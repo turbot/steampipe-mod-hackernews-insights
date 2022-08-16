@@ -20,7 +20,7 @@ dashboard "hackernews_dashboard" {
     # Analysis
     card {
       width = 2
-      query = query.hackernews_max_score
+      query = query.hackernews_dashboard_max_score
       args = [
         self.input.story_type
       ]
@@ -28,30 +28,30 @@ dashboard "hackernews_dashboard" {
 
     card {
       width = 2
-      query = query.hackernews_avg_score
+      query = query.hackernews_dashboard_avg_score
       args = [
         self.input.story_type
       ]
     }
 
     card {
-      query = query.hackernews_ask_count
+      query = query.hackernews_dashboard_ask_count
       width = 2
     }
 
     card {
-      query = query.hackernews_show_count
+      query = query.hackernews_dashboard_show_count
       width = 2
     }
 
     card {
       width = 2
-      query = query.hackernews_avg_ask_score
+      query = query.hackernews_dashboard_avg_ask_score
     }
 
     card {
       width = 2
-      query = query.hackernews_avg_show_score
+      query = query.hackernews_dashboard_avg_show_score
     }
 
   }
@@ -62,7 +62,7 @@ dashboard "hackernews_dashboard" {
 
     chart {
       title = "Users Posts (> 5)"
-      query = query.hackernews_user_with_greater_than_5_post
+      query = query.hackernews_dashboard_user_with_greater_than_5_post
       type  = "column"
       args  = [
         self.input.story_type
@@ -72,7 +72,7 @@ dashboard "hackernews_dashboard" {
 
     chart {
       title = "Users Score (> 50)"
-      query = query.hackernews_user_with_greater_than_50_score
+      query = query.hackernews_dashboard_user_with_greater_than_50_score
       type  = "column"
       args  = [
         self.input.story_type
@@ -86,7 +86,7 @@ dashboard "hackernews_dashboard" {
     chart {
       width = 6
       title = "Stories by Hour"
-      query = query.hackernews_stories_by_hour
+      query = query.hackernews_dashboard_stories_by_hour
       args  = [
         self.input.story_type
       ]
@@ -95,7 +95,7 @@ dashboard "hackernews_dashboard" {
     chart {
       width = 6
       title = "Asks and Shows by Hour"
-      query = query.hackernews_ask_and_show_by_hour
+      query = query.hackernews_dashboard_ask_and_show_by_hour
     }
 
   }
@@ -107,7 +107,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "Company Mentions: Last 4 Hours"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.companies, 240, 0 ]
     }
 
@@ -116,7 +116,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "Company Mentions: Last 24 Hours"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.companies, 1440, 0 ]
     }
 
@@ -125,7 +125,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "Company Mentions: Last 2 Days"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.companies, 2880, 0 ]
     }
   }
@@ -137,7 +137,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "Language Mentions: Last 4 Hours"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.languages, 240, 0 ]
     }
 
@@ -146,7 +146,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "Language Mentions: Last 24 Hours"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.languages, 1440, 0 ]
     }
 
@@ -155,7 +155,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "Language Mentions: Last 2 Days"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.languages, 2880, 0 ]
     }
 
@@ -168,7 +168,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "OS Mentions: Last 4 Hours"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.operating_systems, 240, 0 ]
     }
 
@@ -177,7 +177,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "OS Mentions: Last 24 Hours"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.operating_systems, 1440, 0 ]
     }
 
@@ -186,7 +186,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "OS Mentions: Last 2 Days"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.operating_systems, 2880, 0 ]
     }
 
@@ -199,7 +199,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "Cloud Mentions: Last 4 Hours"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.clouds, 240, 0 ]
     }
 
@@ -208,7 +208,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "Cloud Mentions: Last 24 Hours"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.clouds, 1440, 0 ]
     }
 
@@ -217,7 +217,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "Cloud Mentions: Last 2 Days"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.clouds, 2880, 0 ]
     }
 
@@ -230,7 +230,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "DB Mentions: Last 4 Hours"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.dbs, 240, 0 ]
     }
 
@@ -239,7 +239,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "DB Mentions: Last 24 Hours"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.dbs, 1440, 0 ]
     }
 
@@ -248,7 +248,7 @@ dashboard "hackernews_dashboard" {
       width = 4
       type = "donut"
       title = "DB mentions: Last 2 Days"
-      query = query.mentions
+      query = query.hackernews_dashboard_mentions
       args = [ self.input.story_type, local.dbs, 2880, 0 ]
     }
 
@@ -258,19 +258,19 @@ dashboard "hackernews_dashboard" {
 
 # Card Queries
 
-query "hackernews_ask_count" {
+query "hackernews_dashboard_ask_count" {
   sql = <<-EOQ
     select count(*) as "Ask HN" from hackernews_ask_hn
   EOQ
 }
 
-query "hackernews_show_count" {
+query "hackernews_dashboard_show_count" {
   sql = <<-EOQ
     select count(*) as "Show HN" from hackernews_show_hn
   EOQ
 }
 
-query "hackernews_max_score" {
+query "hackernews_dashboard_max_score" {
   sql = <<-EOQ
     with stories as (
       select * from hackernews_new where $1 = 'New'
@@ -284,7 +284,7 @@ query "hackernews_max_score" {
   param "story_type" {}
 }
 
-query "hackernews_avg_score" {
+query "hackernews_dashboard_avg_score" {
   sql = <<-EOQ
     with stories as (
       select * from hackernews_new where $1 = 'New'
@@ -299,7 +299,7 @@ query "hackernews_avg_score" {
   param "story_type" {}
 }
 
-query "hackernews_avg_ask_score" {
+query "hackernews_dashboard_avg_ask_score" {
   sql = <<-EOQ
     select
       round(avg(score), 1) as "Avg Ask Score"
@@ -308,7 +308,7 @@ query "hackernews_avg_ask_score" {
   EOQ
 }
 
-query "hackernews_avg_show_score" {
+query "hackernews_dashboard_avg_show_score" {
   sql = <<-EOQ
     select
       round(avg(score), 1) as "Avg Show Score"
@@ -319,7 +319,7 @@ query "hackernews_avg_show_score" {
 
 # Analysis Queries
 
-query "hackernews_user_with_greater_than_5_post" {
+query "hackernews_dashboard_user_with_greater_than_5_post" {
   sql = <<-EOQ
     with data as (
       (select
@@ -364,7 +364,7 @@ query "hackernews_user_with_greater_than_5_post" {
   param "story_type" {}
 }
 
-query "hackernews_user_with_greater_than_50_score" {
+query "hackernews_dashboard_user_with_greater_than_50_score" {
   sql = <<-EOQ
     with stories as (
       select * from hackernews_new where $1 = 'New'
@@ -390,7 +390,7 @@ query "hackernews_user_with_greater_than_50_score" {
   param "story_type" {}
 }
 
-query "hackernews_stories_by_hour" {
+query "hackernews_dashboard_stories_by_hour" {
   sql = <<-EOQ
     with data as (
       (select * from hackernews_new where $1 = 'New')
@@ -412,7 +412,7 @@ query "hackernews_stories_by_hour" {
   param "story_type" {}
 }
 
-query "hackernews_ask_and_show_by_hour" {
+query "hackernews_dashboard_ask_and_show_by_hour" {
   sql = <<-EOQ
     with ask_hn as (
       select
@@ -449,7 +449,7 @@ query "hackernews_ask_and_show_by_hour" {
   EOQ
 }
 
-query "mentions" {
+query "hackernews_dashboard_mentions" {
   sql = <<-EOQ
     with data as (
       (select * from hackernews_new where $1 = 'New')

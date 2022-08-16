@@ -18,7 +18,7 @@ dashboard "hackernews_stories" {
 
     card {
       width = 2
-      query = query.hackernews_max_score
+      query = query.hackernews_dashboard_max_score
       args = [
         self.input.story_type
       ]
@@ -26,7 +26,7 @@ dashboard "hackernews_stories" {
 
     card {
       width = 2
-      query = query.hackernews_avg_score
+      query = query.hackernews_dashboard_avg_score
       args = [
         self.input.story_type
       ]
@@ -34,7 +34,7 @@ dashboard "hackernews_stories" {
 
     card {
       width = 2
-      query = query.hackernews_max_comments
+      query = query.hackernews_stories_max_comments
       args = [
         self.input.story_type
       ]
@@ -42,7 +42,7 @@ dashboard "hackernews_stories" {
 
     card {
       width = 2
-      query = query.hackernews_avg_comments
+      query = query.hackernews_stories_avg_comments
       args = [
         self.input.story_type
       ]
@@ -57,7 +57,7 @@ dashboard "hackernews_stories" {
       args = [
         self.input.story_type
       ]
-      query = query.hackernews_stories
+      query = query.hackernews_stories_details
 
       column "By" {
         href = "https://news.ycombinator.com/user?id={{.'By'}}"
@@ -73,7 +73,7 @@ dashboard "hackernews_stories" {
 
 }
 
-query "hackernews_max_comments" {
+query "hackernews_stories_max_comments" {
   sql = <<-EOQ
     with stories as (
       select * from hackernews_new where $1 = 'New'
@@ -87,7 +87,7 @@ query "hackernews_max_comments" {
   param "story_type" {}
 }
 
-query "hackernews_avg_comments" {
+query "hackernews_stories_avg_comments" {
   sql = <<-EOQ
     with stories as (
       select * from hackernews_new where $1 = 'New'
@@ -102,7 +102,7 @@ query "hackernews_avg_comments" {
   param "story_type" {}
 }
 
-query "hackernews_stories" {
+query "hackernews_stories_details" {
   sql = <<-EOQ
   with stories as (
     select * from hackernews_new where $1 = 'New'
