@@ -21,27 +21,35 @@ mod "hackernews_insights" {
 }
 
 locals {
-  companies = [
+  companies = [ 
     "Amazon",
     "AMD",
     "Apple",
     "CloudFlare",
     "Facebook",
+    "GitLab",
     "Google",
+    "IBM",
     "Intel ",
     "Microsoft",
+    "Mozilla",
     "Netflix",
+    "OpenAI",
     "Tesla",
+    "TikTok",
     "Toshiba",
     "Twitter",
-    "SpaceX",
     "Sony",
-    "Stripe"
+    "SpaceX",
+    "Stripe",
+    "Uber",
+    "Zendesk"
   ]
 
   languages = [
     "C#",
     "C\\+\\+",
+    "Clojure",
     "CSS",
     "Erlang",
     "golang| go 1.| (in|with|using) go | go (.+)(compiler|template|monorepo|generic|interface|library|framework|garbage|module|range|source)",
@@ -65,14 +73,15 @@ locals {
     "Android",
     "iOS",
     "Linux",
-    "macOS",
+    "macOS| mac os ( *)x",
     "Windows"
   ]
 
   clouds = [
     "AWS",
     "Azure",
-    "Google Cloud|GCP"
+    "Google Cloud|GCP",
+    "Oracle Cloud"
   ]
 
   dbs = [
@@ -91,6 +100,14 @@ locals {
     "Supabase",
     "Yugabyte"
   ]
+
+  editors = [
+    " emacs ",
+    " sublime ",
+    "vscode| vs code |visual studio code",
+    " vim "
+  ]
+
 }
 
 # https://steampipe.io/docs/reference/mod-resources/dashboard#color
