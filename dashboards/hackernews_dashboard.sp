@@ -7,7 +7,7 @@ dashboard "hackernews_dashboard" {
     type = "Dashboard"
   })
 
-  input "story_type" {
+  input "hackernews_dashboard_story_type" {
     title = "Stories:"
     option "New" {}
     option "Top" {}
@@ -22,7 +22,7 @@ dashboard "hackernews_dashboard" {
       width = 2
       query = query.hackernews_dashboard_max_score
       args = [
-        self.input.story_type
+        self.input.hackernews_dashboard_story_type
       ]
     }
 
@@ -30,7 +30,7 @@ dashboard "hackernews_dashboard" {
       width = 2
       query = query.hackernews_dashboard_avg_score
       args = [
-        self.input.story_type
+        self.input.hackernews_dashboard_story_type
       ]
     }
 
@@ -65,7 +65,7 @@ dashboard "hackernews_dashboard" {
       query = query.hackernews_dashboard_user_with_greater_than_5_post
       type  = "column"
       args  = [
-        self.input.story_type
+        self.input.hackernews_dashboard_story_type
       ]
       width = 6
     }
@@ -75,7 +75,7 @@ dashboard "hackernews_dashboard" {
       query = query.hackernews_dashboard_user_with_greater_than_50_score
       type  = "column"
       args  = [
-        self.input.story_type
+        self.input.hackernews_dashboard_story_type
       ]
       width = 6
     }
@@ -88,7 +88,7 @@ dashboard "hackernews_dashboard" {
       title = "Stories by Hour"
       query = query.hackernews_dashboard_stories_by_hour
       args  = [
-        self.input.story_type
+        self.input.hackernews_dashboard_story_type
       ]
     }
 
@@ -108,7 +108,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Company Mentions: Last 4 Hours"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.companies, 240, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.companies, 240, 0 ]
     }
 
     chart {
@@ -117,7 +117,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Company Mentions: Last 24 Hours"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.companies, 1440, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.companies, 1440, 0 ]
     }
 
     chart {
@@ -126,7 +126,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Company Mentions: Last 2 Days"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.companies, 2880, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.companies, 2880, 0 ]
     }
   }
 
@@ -138,7 +138,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Language Mentions: Last 4 Hours"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.languages, 240, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.languages, 240, 0 ]
     }
 
     chart {
@@ -147,7 +147,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Language Mentions: Last 24 Hours"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.languages, 1440, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.languages, 1440, 0 ]
     }
 
     chart {
@@ -156,7 +156,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Language Mentions: Last 2 Days"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.languages, 2880, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.languages, 2880, 0 ]
     }
 
   }
@@ -169,7 +169,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "OS Mentions: Last 4 Hours"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.operating_systems, 240, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.operating_systems, 240, 0 ]
     }
 
     chart {
@@ -178,7 +178,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "OS Mentions: Last 24 Hours"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.operating_systems, 1440, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.operating_systems, 1440, 0 ]
     }
 
     chart {
@@ -187,7 +187,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "OS Mentions: Last 2 Days"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.operating_systems, 2880, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.operating_systems, 2880, 0 ]
     }
 
   }
@@ -200,7 +200,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Cloud Mentions: Last 4 Hours"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.clouds, 240, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.clouds, 240, 0 ]
     }
 
     chart {
@@ -209,7 +209,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Cloud Mentions: Last 24 Hours"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.clouds, 1440, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.clouds, 1440, 0 ]
     }
 
     chart {
@@ -218,7 +218,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "Cloud Mentions: Last 2 Days"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.clouds, 2880, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.clouds, 2880, 0 ]
     }
 
   }
@@ -231,7 +231,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "DB Mentions: Last 4 Hours"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.dbs, 240, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.dbs, 240, 0 ]
     }
 
     chart {
@@ -240,7 +240,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "DB Mentions: Last 24 Hours"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.dbs, 1440, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.dbs, 1440, 0 ]
     }
 
     chart {
@@ -249,7 +249,7 @@ dashboard "hackernews_dashboard" {
       type = "donut"
       title = "DB mentions: Last 2 Days"
       query = query.hackernews_dashboard_mentions
-      args = [ self.input.story_type, local.dbs, 2880, 0 ]
+      args = [ self.input.hackernews_dashboard_story_type, local.dbs, 2880, 0 ]
     }
 
   }
@@ -281,7 +281,7 @@ query "hackernews_dashboard_max_score" {
       )
       select max(score) as "Max Score" from stories
    EOQ
-  param "story_type" {}
+  param "hackernews_dashboard_story_type" {}
 }
 
 query "hackernews_dashboard_avg_score" {
@@ -296,7 +296,7 @@ query "hackernews_dashboard_avg_score" {
     select
       round(avg(score), 1) as "Avg Score" from hackernews_new
   EOQ
-  param "story_type" {}
+  param "hackernews_dashboard_story_type" {}
 }
 
 query "hackernews_dashboard_avg_ask_score" {
@@ -361,7 +361,7 @@ query "hackernews_dashboard_user_with_greater_than_5_post" {
     limit
       25
   EOQ
-  param "story_type" {}
+  param "hackernews_dashboard_story_type" {}
 }
 
 query "hackernews_dashboard_user_with_greater_than_50_score" {
@@ -387,7 +387,7 @@ query "hackernews_dashboard_user_with_greater_than_50_score" {
     limit
       25
   EOQ
-  param "story_type" {}
+  param "hackernews_dashboard_story_type" {}
 }
 
 query "hackernews_dashboard_stories_by_hour" {
@@ -409,7 +409,7 @@ query "hackernews_dashboard_stories_by_hour" {
     order by
       hour;
   EOQ
-  param "story_type" {}
+  param "hackernews_dashboard_story_type" {}
 }
 
 query "hackernews_dashboard_ask_and_show_by_hour" {
@@ -487,7 +487,7 @@ query "hackernews_dashboard_mentions" {
     order by
       mentions desc
   EOQ
-  param "story_type" {}
+  param "hackernews_dashboard_story_type" {}
   param "names" {}
   param "min_minutes_ago" {}
   param "max_minutes_ago" {}
