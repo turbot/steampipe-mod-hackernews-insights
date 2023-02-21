@@ -1,3 +1,9 @@
+## v0.3 [2023-02-21]
+
+_Bug fixes_
+
+- Fixed syntax for `self.input.<input_name>` references to include `.value`, e.g., `self.input.<input_name>.value`.
+
 ## v0.2 [2022-08-16]
 
 _Enhancements_
