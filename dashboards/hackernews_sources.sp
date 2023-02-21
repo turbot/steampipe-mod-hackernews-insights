@@ -27,7 +27,7 @@ dashboard "hackernews_sources" {
       title = "Top 10 Domains by Count"
       width = 6
       type = "donut"
-       args = [ self.input.story_type ]
+       args = [ self.input.story_type.value ]
       query = query.hackernews_sources_top_10_domains_by_count
     }
 
@@ -35,7 +35,7 @@ dashboard "hackernews_sources" {
       title = "Top 10 Domains by Max Score"
       type = "donut"
       width = 6
-      args = [ self.input.story_type ]
+      args = [ self.input.story_type.value ]
       query = query.hackernews_sources_top_10_domains_by_max_score
     }
 
@@ -51,12 +51,12 @@ dashboard "hackernews_sources" {
         width = 6
         query = query.hackernews_sources_domain_input
         args  = {
-          story_type = self.input.story_type.value
+          story_type = self.input.story_type.value.value
         }
       }
 
       table {
-        args  = [ self.input.story_type.value, self.input.domain ]
+        args  = [ self.input.story_type.value.value, self.input.domain ]
         query = query.hackernews_sources_detail
 
         column "By" {
@@ -81,7 +81,7 @@ dashboard "hackernews_sources" {
     table {
       width = 12
       query = query.hackernews_sources_domains
-      args = [ self.input.story_type ]
+      args = [ self.input.story_type.value ]
       column "Domain" {
         wrap = "all"
         href = "https://{{.'Domain'}}"
