@@ -20,7 +20,7 @@ dashboard "hackernews_stories" {
       width = 2
       query = query.hackernews_dashboard_max_score
       args = [
-        self.input.story_type
+        self.input.story_type.value
       ]
     }
 
@@ -28,7 +28,7 @@ dashboard "hackernews_stories" {
       width = 2
       query = query.hackernews_dashboard_avg_score
       args = [
-        self.input.story_type
+        self.input.story_type.value
       ]
     }
 
@@ -36,7 +36,7 @@ dashboard "hackernews_stories" {
       width = 2
       query = query.hackernews_stories_max_comments
       args = [
-        self.input.story_type
+        self.input.story_type.value
       ]
     }
 
@@ -44,7 +44,7 @@ dashboard "hackernews_stories" {
       width = 2
       query = query.hackernews_stories_avg_comments
       args = [
-        self.input.story_type
+        self.input.story_type.value
       ]
     }
 
@@ -55,7 +55,7 @@ dashboard "hackernews_stories" {
 
     table {
       args = [
-        self.input.story_type
+        self.input.story_type.value
       ]
       query = query.hackernews_stories_details
 
