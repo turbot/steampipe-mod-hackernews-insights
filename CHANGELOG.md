@@ -1,3 +1,9 @@
+## v0.4 [2023-11-03]
+
+_Breaking changes_
+
+- Updated the plugin dependency section of the mod to use `min_version` instead of `version`. ([#12](https://github.com/turbot/steampipe-mod-hackernews-insights/pull/12))
+
 ## v0.3 [2023-02-21]
 
 _Bug fixes_
