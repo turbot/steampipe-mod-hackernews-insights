@@ -15,7 +15,7 @@ mod "hackernews_insights" {
 
   require {
     plugin "hackernews" {
-      version = "0.4.0"
+      min_version = "0.4.0"
     }
   }
 }
