@@ -4,6 +4,10 @@ _Breaking changes_
 
 - Updated the plugin dependency section of the mod to use `min_version` instead of `version`. ([#12](https://github.com/turbot/steampipe-mod-hackernews-insights/pull/12))
 
+_Bug fixes_
+
+- Fixed dashboard localhost URLs in README and index doc. ([#8](https://github.com/turbot/steampipe-mod-hackernews-insights/pull/8))
+
 ## v0.3 [2023-02-21]
 
 _Bug fixes_
