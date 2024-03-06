@@ -1,19 +1,11 @@
----
-repository: "https://github.com/turbot/steampipe-mod-hackernews-insights"
----
-
 # Hacker News Insights Mod
 
 Create dashboards and reports for Hacker News stories, jobs, and other items using Powerpipe and Steampipe.
 
-<!-- <img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_dashboard.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_dashboard.png" width="50%" type="thumbnail"/>
 <img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_stories.png" width="50%" type="thumbnail"/>
 <img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_sources.png" width="50%" type="thumbnail"/>
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_jobs.png" width="50%" type="thumbnail"/> -->
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/add-new-checks/docs/images/hackernews_dashboard.png" width="50%" type="thumbnail"/>
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/add-new-checks/docs/images/hackernews_stories.png" width="50%" type="thumbnail"/>
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/add-new-checks/docs/images/hackernews_sources.png" width="50%" type="thumbnail"/>
-<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/add-new-checks/docs/images/hackernews_jobs.png" width="50%" type="thumbnail"/>
+<img src="https://raw.githubusercontent.com/turbot/steampipe-mod-hackernews-insights/main/docs/images/hackernews_jobs.png" width="50%" type="thumbnail"/>
 
 ## Documentation
 
@@ -60,7 +52,7 @@ Start the dashboard server:
 powerpipe server
 ```
 
-Browse and view your dashboards at **https://localhost:9033**.
+Browse and view your dashboards at **http://localhost:9033**.
 
 ## Open Source & Contributing
 
